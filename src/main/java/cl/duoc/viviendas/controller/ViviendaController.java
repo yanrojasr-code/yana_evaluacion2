@@ -189,4 +189,18 @@ public class ViviendaController {
         lblMensaje.setText(codigo + " (" + tipo + ") registrada correctamente.");
 
     }
+    @FXML
+    public void eliminarVivienda() {
+
+        Vivienda seleccionada = tablaViviendas.getSelectionModel().getSelectedItem();
+
+        if (seleccionada == null) {
+            lblMensaje.setText("Debe seleccionar una vivienda para eliminar.");
+            return;
+        }
+
+        listaViviendas.remove(seleccionada);
+
+        lblMensaje.setText("Vivienda eliminada correctamente.");
+    }
 }

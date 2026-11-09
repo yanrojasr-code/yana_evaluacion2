@@ -110,6 +110,7 @@
 
                 <Button text="Eliminar"
                         fx:id="btnEliminar"
+                        onAction="#eliminarVivienda"
                         prefWidth="100"
                         prefHeight="35"/>
 
