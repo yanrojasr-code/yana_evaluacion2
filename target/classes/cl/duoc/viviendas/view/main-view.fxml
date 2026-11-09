@@ -69,6 +69,7 @@
 
                 <Button text="Registrar"
                         fx:id="btnRegistrar"
+                        onAction="#registrarVivienda"
                         prefWidth="100"
                         prefHeight="35"/>
 
