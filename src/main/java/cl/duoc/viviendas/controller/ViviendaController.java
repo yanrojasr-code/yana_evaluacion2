@@ -15,6 +15,7 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import cl.duoc.viviendas.model.Casa;
 import cl.duoc.viviendas.model.Departamento;
 import javafx.beans.property.ReadOnlyObjectWrapper;
+import cl.duoc.viviendas.repository.ViviendaRepository;
 
 public class ViviendaController {
 
@@ -70,6 +71,7 @@ public class ViviendaController {
     private Label lblMensaje;
     private ObservableList<Vivienda> listaViviendas =
             FXCollections.observableArrayList();
+    private ViviendaRepository repositorio = new ViviendaRepository();
 
     @FXML
     public void initialize() {
@@ -85,6 +87,7 @@ public class ViviendaController {
             chkPatio.setDisable(!esCasa);
         });
 
+        listaViviendas.addAll(repositorio.cargarViviendas());
         tablaViviendas.setItems(listaViviendas);
 
         colTipo.setCellValueFactory(new PropertyValueFactory<>("tipo"));
@@ -113,6 +116,12 @@ public class ViviendaController {
         if (codigo.trim().isEmpty()) {
             lblMensaje.setText("Debe ingresar el código de la vivienda.");
             return;
+        }
+        for (Vivienda registrada : listaViviendas) {
+            if (registrada.getCodigo().equalsIgnoreCase(codigo.trim())) {
+                lblMensaje.setText("Ya existe una vivienda con ese código.");
+                return;
+            }
         }
 
         if (superficieTexto.trim().isEmpty()) {
@@ -185,6 +194,7 @@ public class ViviendaController {
         }
 
         listaViviendas.add(vivienda);
+        repositorio.guardarViviendas(listaViviendas);
 
         lblMensaje.setText(codigo + " (" + tipo + ") registrada correctamente.");
 
@@ -200,6 +210,7 @@ public class ViviendaController {
         }
 
         listaViviendas.remove(seleccionada);
+        repositorio.guardarViviendas(listaViviendas);
 
         lblMensaje.setText("Vivienda eliminada correctamente.");
     }
